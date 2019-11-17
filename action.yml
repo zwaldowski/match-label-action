@@ -1,13 +1,12 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: Match PR Label
+description: 'Requires a PR to exactly one of the labels from a list'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  allowed:
+    description: 'comma- or newline-separated label names to look for'
     required: true
-    default: '1000'
 outputs:
-  time: # output will be available to future steps 
-    description: 'The message to output'
+  match:
+    description: 'The matched label, if found'
 runs:
   using: 'node12'
   main: 'dist/index.js'

@@ -1,0 +1,5 @@
+{
+  "pull_request": {
+    "labels": [ { "name": "hello" } ]
+  }
+}
