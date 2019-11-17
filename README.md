@@ -16,9 +16,11 @@ The one label from the `allowed` list that was located. The action will fail if 
 
 ## Example usage
 
-uses: zwaldowski/match-label-action@master
+```yaml
+uses: zwaldowski/match-label-action@v1
 with:
   allowed: >
     major
     minor
     patch
+```
