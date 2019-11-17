@@ -1,21 +1,17 @@
-const core = require('@actions/core');
-const wait = require('./wait');
+const core = require('@actions/core')
+const {context} = require('@actions/github')
+const match = require('./match');
 
-
-// most @actions toolkit packages have async methods
-async function run() {
-  try { 
-    const ms = core.getInput('milliseconds');
-    console.log(`Waiting ${ms} milliseconds ...`)
-
-    core.debug((new Date()).toTimeString())
-    wait(parseInt(ms));
-    core.debug((new Date()).toTimeString())
-
-    core.setOutput('time', new Date().toTimeString());
-  } 
-  catch (error) {
-    core.setFailed(error.message);
+function run() {
+  try {
+    const pr = context.payload.pull_request || {}
+    const labels = pr.labels || []
+    const labelNames = labels.map(label => label.name)
+    const allowedLabels = match.parseAllowed(core.getInput('allowed'))
+    const matchingLabel = match.findMatching(labelNames, allowedLabels)
+    core.setOutput('match', matchingLabel)
+  } catch (error) {
+    core.setFailed(error.message)
   }
 }
 
