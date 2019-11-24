@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/zwaldowski/match-label-action/issues"
   },
-  "homepage": "https://github.com/actions/javascript-action#readme",
+  "homepage": "https://github.com/zwaldowski/match-label-action#readme",
   "dependencies": {
     "@actions/core": "^1.1.1",
     "@actions/github": "^1.1.0"
