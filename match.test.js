@@ -1,45 +1,61 @@
-const match = require('./match');
+const test = require('ava')
+const match = require('./match')
 
-test('parses newline-separated arguments', () => {
-    const allowedLabels = match.parseAllowed('hello\nworld')
-    expect(allowedLabels).toStrictEqual(['hello', 'world'])
+test('parses newline-separated arguments', t => {
+  const allowedLabels = match.parseAllowed('hello\nworld')
+  t.deepEqual(allowedLabels, ['hello', 'world'])
 })
 
-test('parses comma-separated arguments', () => {
-    const allowedLabels = match.parseAllowed('hello,world')
-    expect(allowedLabels).toStrictEqual(['hello', 'world'])
+test('parses comma-separated arguments', t => {
+  const allowedLabels = match.parseAllowed('hello,world')
+  t.deepEqual(allowedLabels, ['hello', 'world'])
 })
 
-test('parses mixed newline-and-comma arguments', () => {
-    const allowedLabels = match.parseAllowed('major\nminor,patch')
-    expect(allowedLabels).toStrictEqual(['major', 'minor', 'patch'])
+test('parses mixed newline-and-comma arguments', t => {
+  const allowedLabels = match.parseAllowed('major\nminor,patch')
+  t.deepEqual(allowedLabels, ['major', 'minor', 'patch'])
 })
 
-test('parses arguments with extra whitespace', () => {
-    const allowedLabels = match.parseAllowed('hello    ,      world')
-    expect(allowedLabels).toStrictEqual(['hello', 'world'])
+test('parses arguments with whitespace', t => {
+  const allowedLabels = match.parseAllowed('hello, world')
+  t.deepEqual(allowedLabels, ['hello', 'world'])
 })
 
-test('parses arguments by skipping empty arguments', () => {
-    const allowedLabels = match.parseAllowed('hello    ,,      world')
-    expect(allowedLabels).toStrictEqual(['hello', 'world'])
+test('parses arguments with excessive whitespace', t => {
+  const allowedLabels = match.parseAllowed('hello    ,      world')
+  t.deepEqual(allowedLabels, ['hello', 'world'])
 })
 
-test('match succeeds with exactly one label', () => {
-    const matchedLabel = match.findMatching([ 'minor' ], [ 'major', 'minor', 'patch' ], false)
-    expect(matchedLabel).toStrictEqual(['minor'])
+test('parses arguments by skipping empty arguments', t => {
+  const allowedLabels = match.parseAllowed('hello    ,,      world')
+  t.deepEqual(allowedLabels, ['hello', 'world'])
 })
 
-test('match throws for no labels', () => {
-    expect(() => match.findMatching([], [ 'major', 'minor', 'patch' ], false)).toThrow()
-    expect(() => match.findMatching([], [ 'major', 'minor', 'patch' ], true)).toThrow()
+test('match succeeds with exactly one label', t => {
+  const matchedLabel = match.findMatching(
+    ['minor'],
+    ['major', 'minor', 'patch'],
+    false
+  )
+  t.deepEqual(matchedLabel, ['minor'])
 })
 
-test('match throws for too many labels', () => {
-    expect(() => match.findMatching(['minor', 'patch'], [ 'major', 'minor', 'patch' ], false)).toThrow()
+test('match throws for no labels', t => {
+  t.throws(() => match.findMatching([], ['major', 'minor', 'patch'], false))
+  t.throws(() => match.findMatching([], ['major', 'minor', 'patch'], true))
 })
 
-test('match does not throw for too many allowed multiple labels', () => {
-    const matchLabel = match.findMatching(['minor', 'patch'], [ 'major', 'minor', 'patch'], true)
-    expect(matchLabel).toStrictEqual(['minor', 'patch'])
+test('match throws for too many labels', t => {
+  t.throws(() =>
+    match.findMatching(['minor', 'patch'], ['major', 'minor', 'patch'], false)
+  )
+})
+
+test('match does not throw for too many allowed multiple labels', t => {
+  const matchLabel = match.findMatching(
+    ['minor', 'patch'],
+    ['major', 'minor', 'patch'],
+    true
+  )
+  t.deepEqual(matchLabel, ['minor', 'patch'])
 })
