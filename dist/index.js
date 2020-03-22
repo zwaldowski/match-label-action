@@ -24677,7 +24677,7 @@ function parseAllowed(allowed) {
   return allowed.split(/\r?\n/).reduce(
     (labels, line) =>
       labels
-        .concat(line.split(','))
+        .concat(line.split(/,\s*/))
         .filter(label => label)
         .map(label => label.trim()),
     []

@@ -16,7 +16,12 @@ test('parses mixed newline-and-comma arguments', t => {
   t.deepEqual(allowedLabels, ['major', 'minor', 'patch'])
 })
 
-test('parses arguments with extra whitespace', t => {
+test('parses arguments with whitespace', t => {
+  const allowedLabels = match.parseAllowed('hello, world')
+  t.deepEqual(allowedLabels, ['hello', 'world'])
+})
+
+test('parses arguments with excessive whitespace', t => {
   const allowedLabels = match.parseAllowed('hello    ,      world')
   t.deepEqual(allowedLabels, ['hello', 'world'])
 })
