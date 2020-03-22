@@ -2,11 +2,20 @@ name: 'Match PR Label'
 description: 'Requires a PR to exactly one of the labels from a list'
 inputs:
   allowed:
-    description: 'comma- or newline-separated label names to look for'
-    required: true
+    description: >
+      Comma- or newline-separated label names to match exactly one of.
+
+      Mutually exclusive with `allowed_multiple`.
+    required: false
+  allowed_multiple:
+    description: >
+      Comma- or newline-separated label names to match many of'
+
+      Mutually exclusive with `allowed`.
+    required: false
 outputs:
   match:
-    description: 'The matched label, if found'
+    description: 'The matched label, if found. Comma-separated if multiple.'
 runs:
   using: 'node12'
   main: 'dist/index.js'
