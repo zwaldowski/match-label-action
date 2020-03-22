@@ -490,7 +490,7 @@ module.exports = require("os");
 
 const core = __webpack_require__(470)
 const {context} = __webpack_require__(469)
-const match = __webpack_require__(903);
+const match = __webpack_require__(903)
 
 function run() {
   try {
@@ -498,15 +498,24 @@ function run() {
     const labels = pr.labels || []
     const labelNames = labels.map(label => label.name)
     const allowedLabels = match.parseAllowed(core.getInput('allowed'))
-    const allowedMultipleLabels = match.parseAllowed(core.getInput('allowed_multiple'))
-    let matchingLabel;
+    const allowedMultipleLabels = match.parseAllowed(
+      core.getInput('allowed_multiple')
+    )
+    let matchingLabel
     if (allowedLabels.length > 0) {
       matchingLabel = match.findMatching(labelNames, allowedLabels, false)
     } else if (allowedMultipleLabels.length > 0) {
-      matchingLabel = match.findMatching(labelNames, allowedMultipleLabels, true)
+      matchingLabel = match.findMatching(
+        labelNames,
+        allowedMultipleLabels,
+        true
+      )
     } else {
-      return core.setFailed('You must provide either `allowed` or `allowed_multiple` as input.')
+      return core.setFailed(
+        'You must provide either `allowed` or `allowed_multiple` as input.'
+      )
     }
+
     core.setOutput('match', matchingLabel.join(', '))
   } catch (error) {
     core.setFailed(error.message)
@@ -24665,27 +24674,34 @@ exports.withCustomRequest = withCustomRequest;
 /***/ (function(module) {
 
 function parseAllowed(allowed) {
-  return allowed
-    .split(/\r?\n/)
-    .reduce((labels, line) =>
+  return allowed.split(/\r?\n/).reduce(
+    (labels, line) =>
       labels
-        .concat(line.split(","))
+        .concat(line.split(','))
         .filter(label => label)
         .map(label => label.trim()),
-      [])
+    []
+  )
 }
 
 function findMatching(labelNames, allowedLabels, isMultipleAllowed) {
   const allowedLabelsSet = new Set(allowedLabels)
-  const matchingLabels = labelNames.filter(labelName => allowedLabelsSet.has(labelName))
-  if (isMultipleAllowed ? matchingLabels.length < 1 : matchingLabels.length != 1) {
-    const quantifier = isMultipleAllowed ? "at least" : "exactly"
-    throw new Error(`Could not find ${quantifier} one of the appropriate labels on the PR.`)
+  const matchingLabels = labelNames.filter(labelName =>
+    allowedLabelsSet.has(labelName)
+  )
+  if (
+    isMultipleAllowed ? matchingLabels.length < 1 : matchingLabels.length !== 1
+  ) {
+    const quantifier = isMultipleAllowed ? 'at least' : 'exactly'
+    throw new Error(
+      `Could not find ${quantifier} one of the appropriate labels on the PR.`
+    )
   }
+
   return matchingLabels
 }
 
-module.exports = {parseAllowed, findMatching};
+module.exports = {parseAllowed, findMatching}
 
 
 /***/ }),
