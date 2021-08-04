@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "xo --fix",
-    "package": "ncc build index.js -o dist",
+    "package": "ncc build index.js -o dist --source-map --license licenses.txt",
     "test": "xo && ava"
   },
   "repository": {
@@ -24,13 +24,13 @@
   },
   "homepage": "https://github.com/zwaldowski/match-label-action#readme",
   "dependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.4.0",
     "@actions/github": "^2.1.1"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.21.1",
+    "@vercel/ncc": "^0.27.0",
     "ava": "^3.5.1",
-    "xo": "^0.28.0"
+    "xo": "^0.43.0"
   },
   "xo": {
     "prettier": true,
