@@ -1,21 +1,21 @@
-function parseAllowed(allowed) {
-  return allowed.split(/\r?\n/).reduce(
-    (labels, line) =>
-      labels
-        .concat(line.split(/,\s*/))
-        .filter(label => label)
-        .map(label => label.trim()),
-    []
+export function parseAllowed(allowed) {
+  return allowed.split(/\r?\n/).flatMap((line) =>
+    line
+      .split(/,\s*/)
+      .map((label) => label.trim())
+      .filter((label) => label)
   )
 }
 
-function findMatching(labelNames, allowedLabels, isMultipleAllowed) {
+export function findMatching(labelNames, allowedLabels, isMultipleAllowed) {
   const allowedLabelsSet = new Set(allowedLabels)
-  const matchingLabels = labelNames.filter(labelName =>
+  const matchingLabels = labelNames.filter((labelName) =>
     allowedLabelsSet.has(labelName)
   )
   if (
-    isMultipleAllowed ? matchingLabels.length < 1 : matchingLabels.length !== 1
+    isMultipleAllowed
+      ? matchingLabels.length === 0
+      : matchingLabels.length !== 1
   ) {
     const quantifier = isMultipleAllowed ? 'at least' : 'exactly'
     throw new Error(
@@ -25,5 +25,3 @@ function findMatching(labelNames, allowedLabels, isMultipleAllowed) {
 
   return matchingLabels
 }
-
-module.exports = {parseAllowed, findMatching}

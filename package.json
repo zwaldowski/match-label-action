@@ -12,6 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/zwaldowski/match-label-action.git"
   },
+  "type": "module",
   "keywords": [
     "GitHub",
     "Actions",
