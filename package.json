@@ -34,6 +34,9 @@
   },
   "xo": {
     "prettier": true,
+    "rules": {
+      "unicorn/prefer-module": "off"
+    },
     "semicolon": false,
     "space": true
   }

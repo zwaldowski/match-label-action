@@ -1,12 +1,12 @@
 const core = require('@actions/core')
 const {context} = require('@actions/github')
-const match = require('./match')
+const match = require('./match.js')
 
 function run() {
   try {
     const pr = context.payload.pull_request || {}
     const labels = pr.labels || []
-    const labelNames = labels.map(label => label.name)
+    const labelNames = labels.map((label) => label.name)
     const allowedLabels = match.parseAllowed(core.getInput('allowed'))
     const allowedMultipleLabels = match.parseAllowed(
       core.getInput('allowed_multiple')
