@@ -24,13 +24,13 @@
   },
   "homepage": "https://github.com/zwaldowski/match-label-action#readme",
   "dependencies": {
-    "@actions/core": "^1.2.6",
-    "@actions/github": "^2.1.1"
+    "@actions/core": "^1.4.0",
+    "@actions/github": "^5.0.0"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.21.1",
-    "ava": "^3.5.1",
-    "xo": "^0.28.0"
+    "@vercel/ncc": "^0.27.0",
+    "ava": "^3.0.0",
+    "xo": "^0.43.0"
   },
   "xo": {
     "prettier": true,
