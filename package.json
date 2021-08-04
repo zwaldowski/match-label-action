@@ -1,6 +1,6 @@
 {
   "name": "match-label-action",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "Test a pull request for one of several labels.",
   "main": "index.js",
   "scripts": {
