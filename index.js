@@ -11,14 +11,16 @@ function run() {
     const allowedMultipleLabels = match.parseAllowed(
       core.getInput('allowed_multiple')
     )
+    const defaultMatch = core.getInput('default_match')
     let matchingLabel
     if (allowedLabels.length > 0) {
-      matchingLabel = match.findMatching(labelNames, allowedLabels, false)
+      matchingLabel = match.findMatching(labelNames, allowedLabels, false, defaultMatch)
     } else if (allowedMultipleLabels.length > 0) {
       matchingLabel = match.findMatching(
         labelNames,
         allowedMultipleLabels,
-        true
+        true,
+        defaultMatch
       )
     } else {
       return core.setFailed(

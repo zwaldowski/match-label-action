@@ -7,11 +7,14 @@ function parseAllowed(allowed) {
   )
 }
 
-function findMatching(labelNames, allowedLabels, isMultipleAllowed) {
+function findMatching(labelNames, allowedLabels, isMultipleAllowed, defaultValue) {
   const allowedLabelsSet = new Set(allowedLabels)
   const matchingLabels = labelNames.filter((labelName) =>
     allowedLabelsSet.has(labelName)
   )
+  if ( matchingLabels.length === 0 && defaultValue !== undefined) {
+    return [defaultValue]
+  }
   if (
     isMultipleAllowed
       ? matchingLabels.length === 0

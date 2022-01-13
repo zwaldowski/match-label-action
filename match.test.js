@@ -59,3 +59,13 @@ test('match does not throw for too many allowed multiple labels', (t) => {
   )
   t.deepEqual(matchLabel, ['minor', 'patch'])
 })
+
+test('match returns default for no labels', (t) => {
+  const matchedLabel = match.findMatching(
+    [''],
+    ['major', 'minor', 'patch'],
+    false,
+    'default'
+  )
+  t.deepEqual(matchedLabel, ['default'])
+})
