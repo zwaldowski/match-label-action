@@ -14,7 +14,12 @@ function run() {
     const defaultMatch = core.getInput('default_match')
     let matchingLabel
     if (allowedLabels.length > 0) {
-      matchingLabel = match.findMatching(labelNames, allowedLabels, false, defaultMatch)
+      matchingLabel = match.findMatching(
+        labelNames,
+        allowedLabels,
+        false,
+        defaultMatch
+      )
     } else if (allowedMultipleLabels.length > 0) {
       matchingLabel = match.findMatching(
         labelNames,

@@ -13,14 +13,23 @@ function parseAllowed(allowed) {
   )
 }
 
-function findMatching(labelNames, allowedLabels, isMultipleAllowed, defaultValue) {
+function findMatching(
+  labelNames,
+  allowedLabels,
+  isMultipleAllowed,
+  defaultMatch
+) {
   const allowedLabelsSet = new Set(allowedLabels)
   const matchingLabels = labelNames.filter((labelName) =>
     allowedLabelsSet.has(labelName)
   )
-  if ( matchingLabels.length === 0 && defaultValue !== undefined) {
-    return [defaultValue]
+  if (
+    matchingLabels.length === 0 &&
+    (defaultMatch !== undefined || defaultMatch === '')
+  ) {
+    return [defaultMatch]
   }
+
   if (
     isMultipleAllowed
       ? matchingLabels.length === 0
@@ -25656,7 +25665,12 @@ function run() {
     const defaultMatch = core.getInput('default_match')
     let matchingLabel
     if (allowedLabels.length > 0) {
-      matchingLabel = match.findMatching(labelNames, allowedLabels, false, defaultMatch)
+      matchingLabel = match.findMatching(
+        labelNames,
+        allowedLabels,
+        false,
+        defaultMatch
+      )
     } else if (allowedMultipleLabels.length > 0) {
       matchingLabel = match.findMatching(
         labelNames,

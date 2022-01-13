@@ -69,3 +69,53 @@ test('match returns default for no labels', (t) => {
   )
   t.deepEqual(matchedLabel, ['default'])
 })
+
+test('match returns default for no matching labels', (t) => {
+  const matchedLabel = match.findMatching(
+    ['not matching'],
+    ['major', 'minor', 'patch'],
+    false,
+    'default'
+  )
+  t.deepEqual(matchedLabel, ['default'])
+})
+
+test('match returns default for no matching multiple labels', (t) => {
+  const matchedLabel = match.findMatching(
+    ['not matching', 'still not'],
+    ['major', 'minor', 'patch'],
+    true,
+    'default'
+  )
+  t.deepEqual(matchedLabel, ['default'])
+})
+
+test('match does not return default for matching labels', (t) => {
+  const matchedLabel = match.findMatching(
+    ['not matching', 'minor'],
+    ['major', 'minor', 'patch'],
+    false,
+    'default'
+  )
+  t.deepEqual(matchedLabel, ['minor'])
+})
+
+test('match does not return default for matchin multiple labels', (t) => {
+  const matchedLabel = match.findMatching(
+    ['major', 'minor'],
+    ['major', 'minor', 'patch'],
+    true,
+    'default'
+  )
+  t.deepEqual(matchedLabel, ['major', 'minor'])
+})
+
+test('match does not return default for matchin multiple labels but not all', (t) => {
+  const matchedLabel = match.findMatching(
+    ['patch', 'not matching', 'minor'],
+    ['major', 'minor', 'patch'],
+    true,
+    'default'
+  )
+  t.deepEqual(matchedLabel, ['patch', 'minor'])
+})
