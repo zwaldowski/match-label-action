@@ -19,7 +19,8 @@ function findMatching(
   )
   if (
     matchingLabels.length === 0 &&
-    (defaultMatch !== undefined || defaultMatch === '')
+    defaultMatch !== undefined &&
+    defaultMatch !== ''
   ) {
     return [defaultMatch]
   }
