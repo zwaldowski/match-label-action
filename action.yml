@@ -13,6 +13,9 @@ inputs:
 
       Mutually exclusive with `allowed`.
     required: false
+  default_match:
+    description: Label name to "match" if no matching labels are found
+    required: false
 outputs:
   match:
     description: 'The matched label, if found. Comma-separated if multiple.'
