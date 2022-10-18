@@ -3,7 +3,7 @@ function parseAllowed(allowed) {
     line
       .split(/,\s*/)
       .map((label) => label.trim())
-      .filter((label) => label)
+      .filter(Boolean)
   )
 }
 
