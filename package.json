@@ -30,7 +30,7 @@
   "devDependencies": {
     "@vercel/ncc": "^0.34.0",
     "ava": "^4.3.3",
-    "xo": "^0.52.4"
+    "xo": "^0.54.1"
   },
   "prettier": {
     "trailingComma": "none"
