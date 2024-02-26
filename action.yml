@@ -20,7 +20,7 @@ outputs:
   match:
     description: 'The matched label, if found. Comma-separated if multiple.'
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'
 branding:
   icon: 'hash'
