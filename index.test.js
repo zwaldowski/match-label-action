@@ -1,6 +1,6 @@
-const cp = require('child_process')
-const path = require('path')
-const process = require('process')
+const cp = require('node:child_process')
+const path = require('node:path')
+const process = require('node:process')
 const test = require('ava')
 
 test('test runs without default value', (t) => {
