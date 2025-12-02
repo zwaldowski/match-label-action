@@ -20,3 +20,13 @@ jobs:
       uses: ./
       with:
         allowed: pass-test
+
+  test-action:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - name: Test Match PR Label Action
+      uses: ./
+      with:
+        allowed: major, minor, patch
+        default_match: patch
