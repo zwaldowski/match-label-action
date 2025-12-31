@@ -1,4 +1,4 @@
-function parseAllowed(allowed) {
+export function parseAllowed(allowed) {
   return allowed.split(/\r?\n/).flatMap((line) =>
     line
       .split(/,\s*/)
@@ -7,7 +7,7 @@ function parseAllowed(allowed) {
   )
 }
 
-function findMatching(
+export function findMatching(
   labelNames,
   allowedLabels,
   isMultipleAllowed,
@@ -38,5 +38,3 @@ function findMatching(
 
   return matchingLabels
 }
-
-module.exports = {parseAllowed, findMatching}
