@@ -1,38 +1,38 @@
-const test = require('ava')
-const match = require('./match.js')
+import test from 'ava'
+import {parseAllowed, findMatching} from './match.js'
 
 test('parses newline-separated arguments', (t) => {
-  const allowedLabels = match.parseAllowed('hello\nworld')
+  const allowedLabels = parseAllowed('hello\nworld')
   t.deepEqual(allowedLabels, ['hello', 'world'])
 })
 
 test('parses comma-separated arguments', (t) => {
-  const allowedLabels = match.parseAllowed('hello,world')
+  const allowedLabels = parseAllowed('hello,world')
   t.deepEqual(allowedLabels, ['hello', 'world'])
 })
 
 test('parses mixed newline-and-comma arguments', (t) => {
-  const allowedLabels = match.parseAllowed('major\nminor,patch')
+  const allowedLabels = parseAllowed('major\nminor,patch')
   t.deepEqual(allowedLabels, ['major', 'minor', 'patch'])
 })
 
 test('parses arguments with whitespace', (t) => {
-  const allowedLabels = match.parseAllowed('hello, world')
+  const allowedLabels = parseAllowed('hello, world')
   t.deepEqual(allowedLabels, ['hello', 'world'])
 })
 
 test('parses arguments with excessive whitespace', (t) => {
-  const allowedLabels = match.parseAllowed('hello    ,      world')
+  const allowedLabels = parseAllowed('hello    ,      world')
   t.deepEqual(allowedLabels, ['hello', 'world'])
 })
 
 test('parses arguments by skipping empty arguments', (t) => {
-  const allowedLabels = match.parseAllowed('hello    ,,      world')
+  const allowedLabels = parseAllowed('hello    ,,      world')
   t.deepEqual(allowedLabels, ['hello', 'world'])
 })
 
 test('match succeeds with exactly one label', (t) => {
-  const matchedLabel = match.findMatching(
+  const matchedLabel = findMatching(
     ['minor'],
     ['major', 'minor', 'patch'],
     false
@@ -41,18 +41,18 @@ test('match succeeds with exactly one label', (t) => {
 })
 
 test('match throws for no labels', (t) => {
-  t.throws(() => match.findMatching([], ['major', 'minor', 'patch'], false))
-  t.throws(() => match.findMatching([], ['major', 'minor', 'patch'], true))
+  t.throws(() => findMatching([], ['major', 'minor', 'patch'], false))
+  t.throws(() => findMatching([], ['major', 'minor', 'patch'], true))
 })
 
 test('match throws for too many labels', (t) => {
   t.throws(() =>
-    match.findMatching(['minor', 'patch'], ['major', 'minor', 'patch'], false)
+    findMatching(['minor', 'patch'], ['major', 'minor', 'patch'], false)
   )
 })
 
 test('match does not throw for too many allowed multiple labels', (t) => {
-  const matchLabel = match.findMatching(
+  const matchLabel = findMatching(
     ['minor', 'patch'],
     ['major', 'minor', 'patch'],
     true
@@ -61,7 +61,7 @@ test('match does not throw for too many allowed multiple labels', (t) => {
 })
 
 test('match returns default for no labels', (t) => {
-  const matchedLabel = match.findMatching(
+  const matchedLabel = findMatching(
     [''],
     ['major', 'minor', 'patch'],
     false,
@@ -71,7 +71,7 @@ test('match returns default for no labels', (t) => {
 })
 
 test('match returns default for no matching labels', (t) => {
-  const matchedLabel = match.findMatching(
+  const matchedLabel = findMatching(
     ['not matching'],
     ['major', 'minor', 'patch'],
     false,
@@ -81,7 +81,7 @@ test('match returns default for no matching labels', (t) => {
 })
 
 test('match returns default for no matching multiple labels', (t) => {
-  const matchedLabel = match.findMatching(
+  const matchedLabel = findMatching(
     ['not matching', 'still not'],
     ['major', 'minor', 'patch'],
     true,
@@ -91,7 +91,7 @@ test('match returns default for no matching multiple labels', (t) => {
 })
 
 test('match does not return default for matching labels', (t) => {
-  const matchedLabel = match.findMatching(
+  const matchedLabel = findMatching(
     ['not matching', 'minor'],
     ['major', 'minor', 'patch'],
     false,
@@ -101,7 +101,7 @@ test('match does not return default for matching labels', (t) => {
 })
 
 test('match does not return default for matchin multiple labels', (t) => {
-  const matchedLabel = match.findMatching(
+  const matchedLabel = findMatching(
     ['major', 'minor'],
     ['major', 'minor', 'patch'],
     true,
@@ -111,7 +111,7 @@ test('match does not return default for matchin multiple labels', (t) => {
 })
 
 test('match does not return default for matchin multiple labels but not all', (t) => {
-  const matchedLabel = match.findMatching(
+  const matchedLabel = findMatching(
     ['patch', 'not matching', 'minor'],
     ['major', 'minor', 'patch'],
     true,

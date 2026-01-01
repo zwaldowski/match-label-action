@@ -27,7 +27,7 @@ The one label from the `allowed` or `allowed_multiple` list that was located.  I
 ## Example usage
 
 ```yaml
-uses: zwaldowski/match-label-action@v5
+uses: zwaldowski/match-label-action@v6
 with:
   allowed: major, minor, patch
 ```
